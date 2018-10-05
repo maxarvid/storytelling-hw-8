@@ -75,7 +75,7 @@ function ready(datapoints) {
         .attr('d', d => arc(d))
         .attr('fill', d => colorScale(d.data.task))
 
-      console.log(d.key)
+      // console.log(d.key)
       // The pie labels
       container
         .append('text')
