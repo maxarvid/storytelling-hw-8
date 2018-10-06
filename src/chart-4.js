@@ -50,7 +50,7 @@ d3.csv(require('./data/ny-temps.csv'))
   .catch(err => console.log('Failed on', err))
 
 function ready(datapoints) {
-  console.log('data is', datapoints)
+  // console.log('data is', datapoints)
   datapoints.push(datapoints[0])
   var holder = svg
     .append('g')

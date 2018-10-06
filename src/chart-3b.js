@@ -22,7 +22,7 @@ var pie = d3
   .value(1 / 12)
   .sort(null)
 
-let radius = 100
+let radius = 80
 
 var radiusScale = d3
   .scaleLinear()
@@ -55,7 +55,7 @@ function ready(datapoints) {
     .key(d => d.city)
     .entries(datapoints)
 
-  console.log(nested)
+  // console.log(nested)
 
   svg
     .selectAll('.city-temps')
