@@ -100,7 +100,7 @@ function ready(datapoints) {
         .append('path')
         .datum(datapoints)
         .attr('d', line)
-        .attr('fill', 'rgb(0, 0, 255, 0.5')
+        .attr('fill', 'rgb(255, 0, 0, 0.5')
 
       let bands = [20, 40, 60, 80, 100]
 
