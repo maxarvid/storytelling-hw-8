@@ -31,7 +31,6 @@ d3.csv(require('./data/ratings.csv'))
   .catch(err => console.log('Failed with', err))
 
 function ready(datapoints) {
-  console.log('data is', datapoints)
   datapoints.push(datapoints[0])
 
   var categoryList = datapoints.map(d => d.category)
