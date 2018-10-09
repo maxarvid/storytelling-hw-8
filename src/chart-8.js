@@ -54,7 +54,6 @@ function ready(datapoints) {
     { name: 'Steals', value: +player.STL / maxSteals },
     { name: 'Blocks', value: +player.BLK / maxBlocks }
   ]
-  console.log(customPlayer)
 
   var categories = customPlayer.map(d => d.name)
   angleScale.domain(categories)
