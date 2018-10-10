@@ -17,6 +17,18 @@ let maxAssists = 10
 let maxSteals = 5
 let maxBlocks = 5
 
+let longTeamNames = {
+  CLE: 'Cleveland Cavaliers',
+  GSW: 'Golden State Warriors',
+  SAS: 'San Antonio Spurs',
+  MIN: 'Minnesota Timberwolves',
+  MIL: 'Milwaukee Bucks',
+  PHI: 'Philadelphia 76ers',
+  OKC: 'Oklahoma City Thunder',
+  NOP: 'New Orleans Pelicans',
+  HOU: 'Houston Rockets'
+}
+
 let radius = 100
 
 let radiusScale = d3
@@ -40,8 +52,6 @@ function ready(datapoints) {
     .nest()
     .key(d => d.Name)
     .entries(datapoints)
-
-  console.log(nested)
 
   container
     .selectAll('.player-stats')
@@ -75,9 +85,44 @@ function ready(datapoints) {
       var categories = customPlayer.map(d => d.name)
       angleScale.domain(categories)
 
-      console.log(d.key.replace(' ', '-'))
+      console.log(longTeamNames[d.values[0].Team])
 
       let bands = [2, 4, 6, 8, 10]
+
+      svg
+        .append('text')
+        .text(d => d.key)
+        .attr('x', 0)
+        .attr('y', -height / 2)
+        .attr('text-anchor', 'middle')
+
+      svg
+        .append('text')
+        .text(d => longTeamNames[d.values[0].Team])
+        .attr('x', 0)
+        .attr('y', -height / 2)
+        .attr('dy', 12)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', 10)
+
+      svg
+        .selectAll('.scale-band')
+        .data(bands)
+        .enter()
+        .append('circle')
+        .attr('class', 'scale-band')
+        .attr('r', d => radiusScale(d))
+        .attr('fill', d => {
+          if (d % 4 === 0) {
+            return '#F6F6F6'
+          } else {
+            return '#e8e7e5'
+          }
+        })
+        .attr('stroke', 'none')
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .lower()
 
       svg
         .append('mask')
@@ -107,11 +152,13 @@ function ready(datapoints) {
         .attr('font-weight', 800)
 
       svg
+        .append('g')
+        .attr('class', d.values[0].Team)
         .selectAll('.magic-band')
         .data(bands.reverse())
         .enter()
         .append('circle')
-        .attr('class', 'scale-band')
+        .attr('class', 'magic-band')
         .attr('r', d => radiusScale(d))
         .attr('fill', d => {
           if (d % 4 === 0) {
@@ -136,7 +183,16 @@ function ready(datapoints) {
         .attr('y', d => -radiusScale(d))
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'central')
-        .attr('font-size', 12)
+        .attr('font-size', 8)
+
+      svg
+        .append('text')
+        .text('0')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('text-anchor', 'middle')
+        .attr('alignment-baseline', 'middle')
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-points')
@@ -150,7 +206,7 @@ function ready(datapoints) {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'central')
         .attr('transform', `rotate(${(angleScale('Points') / Math.PI) * 180})`)
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-FG')
@@ -167,7 +223,7 @@ function ready(datapoints) {
           'transform',
           `rotate(${(angleScale('Field Goals') / Math.PI) * 180})`
         )
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-3P')
@@ -184,7 +240,7 @@ function ready(datapoints) {
           'transform',
           `rotate(${(angleScale('3-Point Field Goals') / Math.PI) * 180})`
         )
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-FT')
@@ -201,7 +257,7 @@ function ready(datapoints) {
           'transform',
           `rotate(${(angleScale('Free Throws') / Math.PI) * 180})`
         )
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-Rebounds')
@@ -218,7 +274,7 @@ function ready(datapoints) {
           'transform',
           `rotate(${(angleScale('Rebounds') / Math.PI) * 180})`
         )
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-Assists')
@@ -232,7 +288,7 @@ function ready(datapoints) {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'central')
         .attr('transform', `rotate(${(angleScale('Assists') / Math.PI) * 180})`)
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-Steals')
@@ -246,7 +302,7 @@ function ready(datapoints) {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'central')
         .attr('transform', `rotate(${(angleScale('Steals') / Math.PI) * 180})`)
-        .attr('font-size', 12)
+        .attr('font-size', 8)
 
       svg
         .selectAll('.label-blocks')
@@ -260,6 +316,6 @@ function ready(datapoints) {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'central')
         .attr('transform', `rotate(${(angleScale('Blocks') / Math.PI) * 180})`)
-        .attr('font-size', 12)
+        .attr('font-size', 8)
     })
 }
